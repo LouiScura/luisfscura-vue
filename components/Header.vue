@@ -3,8 +3,8 @@ const mobileMenu = ref(false)
 </script>
 
 <template>
-  <header class="w-full bg-primary">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-full py-5 flex flex-wrap">
+  <header class="w-full bg-primary sticky top-0 z-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 items-center justify-between h-full py-5 flex flex-wrap">
       <NuxtLink to="/" class="text-secondary text-2xl md:text-3xl font-bold pointer
         lg:flex-1  items-center gap-1.5 hover:text-lightSecondary transition-colors duration-300 ease-in-out inline-block">Luis Scura</NuxtLink>
         <MainNav class="flex items-center"/>

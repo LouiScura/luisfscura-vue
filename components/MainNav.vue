@@ -13,6 +13,7 @@ const route = useRoute()
         class="md:text-sm lg:text-base font-light hover:text-secondary text-white transition-colors duration-300 ease-in-out"
         :target="item.external ? '_blank' : undefined"
         :class="{ 'text-primary': route.path === item.to }"
+        activeClass="text-red-500"
     >
       {{ item.label }}
     </NuxtLink>

@@ -20,7 +20,8 @@ const config: Config = {
         body: '#F5F5F5',
         pb: '#A8E6CF', // primary button
         sb: '#84A9AC', // secondary button
-        yellowish: '#FFE8A3', // custom yellow
+        yellowish: '#FFE8A3', // custom yellow,
+        heading: '#2D3436' // headings h2,h3, titles
       },
     },
   },
