@@ -3,6 +3,6 @@ export const useMainMenu = () => {
         { label: 'Blog', to: '/blog' },
         { label: 'Contact', to: '/#contact' },
         { label: 'Services', to: '/services' },
-        { label: 'Projects', to: '/Projects]' },
+        { label: 'Projects', to: '/projects' },
     ]
 }

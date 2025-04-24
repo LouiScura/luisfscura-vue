@@ -16,7 +16,7 @@ const mobileMenu = ref(false)
         <span class="block mt-1 h-0.5 w-6 bg-pb transition ease transform duration-300" :class="{'rotate-45 translate-y-0.5' : mobileMenu}"></span>
       </div>
 
-      <MobileNav :mobileMenu="mobileMenu" @close="mobileMenu = false" />
+      <MobileNav :mobileMenu="mobileMenu" @close="mobileMenu=false" />
     </div>
   </header>
 </template>

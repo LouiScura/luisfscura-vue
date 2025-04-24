@@ -1,7 +1,8 @@
 <script setup lang="ts">
 const config = useRuntimeConfig()
+const props = defineProps<{ limit?: number }>()
 
-const { data: services, pending, error } = useAsyncData('getServices', () =>
+const { data: services, pending, error } = await useAsyncData('getServices', () =>
     $fetch(config.public.wordpressUrl, {
       method: 'POST',
       headers: {
@@ -10,7 +11,7 @@ const { data: services, pending, error } = useAsyncData('getServices', () =>
       body: {
         query: `
         query GetServices {
-        services(where: {orderby: {field: MENU_ORDER, order: ASC}}) {
+          services(where: {orderby: {field: MENU_ORDER, order: ASC}}) {
             nodes {
               id
               title
@@ -18,7 +19,7 @@ const { data: services, pending, error } = useAsyncData('getServices', () =>
               menuOrder
               services {
                 icon {
-                 node {
+                  node {
                     id
                     sourceUrl
                     altText
@@ -30,18 +31,18 @@ const { data: services, pending, error } = useAsyncData('getServices', () =>
         }
       `,
       },
-    }).then((res: any) => res.data.services.nodes)
+    }).then(res => {
+      const all = res.data.services.nodes
+      return props.limit ? all.slice(0, props.limit) : all
+    })
 )
 </script>
 
 <template>
-  <div v-if="pending">Loading...</div>
-  <div v-else-if="error">An error occurred: {{ error.message }}</div>
   <div
       v-for="(service, index) in services"
-      v-else
       :key="service.id"
-      class="px-4 py-12 border border-gray-200 w-full md:w-[32%] xl:w-[24%] min-h-80 flex flex-col justify-center"
+      class="px-4 py-6 border border-gray-200 w-full md:w-[32%] xl:w-[24%] lg:min-h-[330px] flex flex-col justify-center hover:bg-primary transition-colors duration-300 ease-in-out"
   >
     <span class="block text-[#ADAFB0] text-xs">/ {{ service.menuOrder }}</span>
     <img
@@ -50,7 +51,7 @@ const { data: services, pending, error } = useAsyncData('getServices', () =>
         :alt="service.services.icon.node.altText || 'Service icon'"
         class="max-w-[48px]"
     />
-    <h2 class="text-2xl font-semibold text-heading my-2">{{ service.title }}</h2>
-    <div class="text-normal font-light text-gray-300" v-html="service.content"></div>
+    <h2 class="text-2xl font-semibold text-heading my-2 hover:text-white">{{ service.title }}</h2>
+    <div class="text-normal font-light text-gray-300 hover:text-white" v-html="service.content"></div>
   </div>
 </template>

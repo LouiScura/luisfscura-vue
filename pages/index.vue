@@ -1,33 +1,33 @@
 <script setup lang="ts">
-const route = useRoute()
-const config = useRuntimeConfig();
+const config = useRuntimeConfig()
 
-const { data: page, pending, error } = useAsyncData('homePage', () =>
+const { data: page, pending, error } = await useAsyncData('homePage', () =>
     $fetch(config.public.wordpressUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: {
         query: `
-        query {
-          pageBy(uri: "home") {
-            title
-            content
-            home {
-              testimonialHero
-              satisfiedClients
-              projectsCompleted
-              reviewsGiven
+          query {
+            pageBy(uri: "home") {
+              title
+              content
+              home {
+                testimonialHero
+                satisfiedClients
+                projectsCompleted
+                reviewsGiven
+              }
             }
           }
-        }
-      `
+        `
       }
     }).then(res => res.data.pageBy)
 )
 </script>
+
 <template>
     <div v-if="page" class="w-full">
-      <div class="bg-primary">
+      <div class="bg-primary py-14">
         <div class="max-w-7xl mx-auto flex justify-center items-center px-4 sm:px-6 lg:px-8">
           <div class="flex flex-1 flex-col bg-primary h-full leading-loose align-start justify-between mt-5 mb-10">
             <div>
@@ -99,18 +99,22 @@ const { data: page, pending, error } = useAsyncData('homePage', () =>
       <section class="flex flex-col flex-wrap md:flex-row text-center max-w-7xl mx-auto px-6 md:px-8">
           <div class="flex flex-col md:flex-row justify-between w-full items-start md:items-center gap-10">
             <h2 class="text-heading text-4xl md:text-5xl font-semibold text-left">Solutions for <br> your Industry</h2>
-            <Button text="View all services" color="bg-sb"
+            <Button text="View all services" color="bg-primary opacity-75"
                     hover="hover:bg-pb"
                     textColor="text-white"
                     href="/services"
                     src="/icons/white-up-arrow.svg"
                     class="w-[55%] justify-between py-2 max-w-[225px] items-center"/>
           </div>
-          <div class="flex flex-col flex-wrap md:flex-row max-w-7xl mx-auto text-left items-start my-20 justify-between gap-y-5 xl:gap-y-0">
+          <div class="flex flex-col flex-wrap md:flex-row max-w-7xl mx-auto text-left items-start my-20 justify-between gap-y-5">
             <Services/>
           </div>
       </section>
     </div>
 
     <div v-else-if="pending">Loading homepage...</div>
+
+    <div v-else>
+      Something went wrong.
+    </div>
 </template>

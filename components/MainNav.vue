@@ -10,10 +10,11 @@ const route = useRoute()
         :key="item.to"
         :to="!item.external ? item.to : undefined"
         :href="item.external ? item.to : undefined"
-        class="md:text-sm lg:text-base font-light hover:text-secondary text-white transition-colors duration-300 ease-in-out"
+        :class="[
+            'md:text-sm lg:text-base font-light hover:text-secondary text-white transition-colors duration-300 ease-in-out',
+            route.path.startsWith(item.to) ? 'text-red-500 font-bold' : 'text-red'
+        ]"
         :target="item.external ? '_blank' : undefined"
-        :class="{ 'text-primary': route.path === item.to }"
-        activeClass="text-red-500"
     >
       {{ item.label }}
     </NuxtLink>

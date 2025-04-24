@@ -2,9 +2,15 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
+  nitro: {
+      preset: "cloudflare-pages"
+  },
+  imports: {
+    autoImport: true,
+  },
   modules: [
     '@nuxt/devtools',
-    '@nuxtjs/tailwindcss',
+    '@nuxtjs/tailwindcss'
   ],
   runtimeConfig: {
     public: {
@@ -12,6 +18,9 @@ export default defineNuxtConfig({
     }
   },
   app: {
+    pageTransition: {
+        name: 'page',
+        mode: 'out-in' },
     head: {
       link: [
         {

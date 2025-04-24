@@ -1,8 +1,4 @@
 <script setup>
-import { watch } from 'vue'
-import { useRoute } from 'vue-router'
-import { useMainMenu } from '~/composables/useMainMenu'
-
 const props = defineProps({
   mobileMenu: {
     type: Boolean,
