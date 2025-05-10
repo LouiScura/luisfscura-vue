@@ -11,16 +11,21 @@ const route = useRoute()
         :to="!item.external ? item.to : undefined"
         :href="item.external ? item.to : undefined"
         :class="[
-            'md:text-sm lg:text-base font-light hover:text-secondary text-white transition-colors duration-300 ease-in-out',
+            'md:text-sm lg:text-base font-medium hover:text-secondary text-white transition-colors duration-300 ease-in-out',
             route.path.startsWith(item.to) ? 'text-red-500 font-bold' : 'text-red'
         ]"
         :target="item.external ? '_blank' : undefined"
     >
       {{ item.label }}
     </NuxtLink>
-    <NuxtLink to="/#contact"
-              class="bg-secondary md:px-3 lg:px-5 py-3 text-[#2D3436] font-bold border-r-secondary rounded-lg hover:bg-lightSecondary transition-colors duration-300 ease-in-out">
-      Let's Connect
-    </NuxtLink>
+
+    <UButton
+      to="https://calendly.com/luisfscura/30min"
+      target="_blank"
+      trailing-icon="bytesize:send"
+      size="lg" color="secondary"
+      class="text-md w-[75%] font-semibold  max-w-[235px] lg:max-w-[225px] transition-colors duration-300 ease-in-out">
+      Book a free call
+    </UButton>
   </nav>
 </template>

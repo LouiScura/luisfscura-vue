@@ -42,12 +42,14 @@ watch(() => route.fullPath, () => {
         {{ item.label }}
       </NuxtLink>
 
-      <NuxtLink
-          to="/#contact"
-          class="mt-6 w-40 text-center bg-secondary px-2 py-3 rounded-lg font-bold text-[#2D3436] hover:bg-lightSecondary transition-colors duration-300 ease-in-out"
-      >
-        Let's Connect
-      </NuxtLink>
+
+      <UButton
+        to="#contact"
+        trailing-icon="icon-park-solid:calendar"
+        size="lg" color="secondary"
+        class="mt-6 text-md w-[75%] max-w-[175px]  text-center transition-colors duration-300 ease-in-out">
+        Book a free call
+      </UButton>
     </nav>
   </Transition>
 </template>

@@ -9,7 +9,7 @@
 
 <template>
   <div
-      class="flex gap-2 flex-wrap">
+      class="flex gap-2 gap-y-4 flex-wrap">
     <div
         v-for="(category, index) in categories"
         :key="index"

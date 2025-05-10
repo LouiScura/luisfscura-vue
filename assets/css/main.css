@@ -1,0 +1,24 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+body {
+    background-color: #F5F5F5;
+}
+
+:root {
+    --ui-primary: #0F363D;
+    --ui-secondary: #FFAB91;
+    --ui-netural: #fff;
+}
+
+@theme static {
+    --font-sans: 'Montserrat', cursive;
+    --color-error: #ff6467;
+    --color-light-secondary: #FFD3B6;
+    --color-body: #F5F5F5;
+    --color-pb: #A8E6CF;
+    --color-sb: #84A9AC;
+    --color-yellowish: #FFE8A3;
+    --color-heading: #2D3436;
+    --color-paragraph: #ADAFB0;
+}

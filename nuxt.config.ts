@@ -8,13 +8,28 @@ export default defineNuxtConfig({
   imports: {
     autoImport: true,
   },
-  modules: [
-    '@nuxt/devtools',
-    '@nuxtjs/tailwindcss'
-  ],
+  modules: ['@nuxt/devtools', '@nuxt/ui', 'nuxt-aos'],
+  css: ['~/assets/css/main.css'],
+  icon: {
+    customCollections: [{
+      prefix: 'custom',
+      dir: './assets/icons'
+    }]
+  },
   runtimeConfig: {
     public: {
       wordpressUrl: 'https://luisfscura.dev/graphql'
+    }
+  },
+  ui: {
+    theme: {
+      colors: [
+        'pb',
+        'sb',
+        'secondary',
+        'yellowish',
+        'paragraph'
+      ]
     }
   },
   app: {

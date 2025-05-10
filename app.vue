@@ -1,19 +1,15 @@
 <template>
-  <div class="font-sans m-0 p-0 relative">
-      <NuxtLoadingIndicator
-          color="#A8E6CF"/>
+  <UApp>
+    <NuxtLoadingIndicator/>
     <Header></Header>
     <NuxtPage />
-  </div>
+    <Footer></Footer>
+  </UApp>
   </template>
 <style>
-.page-enter-active,
-.page-leave-active {
-  transition: all 0.2s;
-}
-.page-enter-from,
-.page-leave-to {
-  opacity: 0;
-  filter: blur(1rem);
+.body {
+  background-color: white !important;
 }
 </style>
+<script setup lang="ts">
+</script>

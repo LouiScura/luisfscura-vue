@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 const config = useRuntimeConfig()
 
 const isHovered = ref(false)
@@ -15,6 +16,7 @@ const { data: page, pending, error } = await useAsyncData('servicesPage', () =>
             content
             servicesPage {
               testimonialHero
+              faqSection
             }
           }
         }
@@ -32,40 +34,29 @@ const { data: page, pending, error } = await useAsyncData('servicesPage', () =>
               <div>
                 <section class="w-11/12 lg:w-10/12">
                   <h1
-                      class="text-white text-4xl md:text-5xl lg:text-7xl lg:!leading-[80px] font-semibold my-4 md:my-1"
+                      class="text-white text-4xl md:text-5xl lg:text-7xl lg:!leading-[80px] font-bold my-4 md:my-1"
                       v-html="page.title" />
                   <div class="text-white/60 text-base leading-relaxed lg:leading-loose my-5" v-html="page.content"></div>
                 </section>
                 <section class="flex justify-between">
                   <div class="flex flex-col md:flex-row justify-between gap-10 md:items-start w-10/12 max-w-6xl">
                     <div class="flex flex-col flex-1 gap-5 lg:flex-row">
-                      <Button
-                          text="Book Consultation"
-                          href="/#contact"
-                          class="w-[75%] justify-between py-2 max-w-[245px] lg:max-w-[225px]"
-                      />
+                      <UButton
+                        to="https://calendly.com/luisfscura/30min"
+                        target="_blank"
+                        trailing-icon="icon-park-solid:calendar"
+                        size="lg" color="pb"
+                        class="text-md w-[75%] max-w-[245px] lg:max-w-[225px] transition-colors duration-300 ease-in-out">
+                        Book a Consultation
+                      </UButton>
                     </div>
                     <div v-if="page.servicesPage?.testimonialHero" class="md:w-5/12"
                          @mouseenter="isHovered = true"
                          @mouseleave="isHovered = false">
                       <p class="text-white text-base leading-[25px]">{{ page.servicesPage.testimonialHero }}</p>
-                      <div class="bg-yellowish p-3 inline-flex items-center gap-3 justify-center rounded-full font-medium my-5 cursor-pointer">
-                        <div class="relative w-6 h-6 shrink-0">
-                          <img
-                              src="/icons/freelance-icon.svg"
-                              alt="Freelance icon"
-                              class="absolute inset-0 w-full h-full transition-opacity duration-300 ease-in-out"
-                              :class="{ 'opacity-0': isHovered, 'opacity-100': !isHovered }"
-                          />
-                          <img
-                              src="/icons/sd-freelance-icon.svg"
-                              alt="Freelance hover icon"
-                              class="absolute inset-0 w-full h-full transition-opacity duration-300 ease-in-out"
-                              :class="{ 'opacity-100': isHovered, 'opacity-0': !isHovered }"
-                          />
-                        </div>
-                        <span class="block text-heading text-sm animate-pulse">Available for freelance work</span>
-                      </div>
+                      <UBadge icon="i-lucide-rocket"
+                              size="lg"
+                              color="yellowish" variant="solid" class="font-semibold p-3 mt-5 animate-pulse rounded-full">Available for freelance work</UBadge>
                     </div>
                   </div>
                 </section>
@@ -74,7 +65,13 @@ const { data: page, pending, error } = await useAsyncData('servicesPage', () =>
           </div>
         </div>
         <section class="flex flex-col flex-wrap md:flex-row max-w-7xl mx-auto text-left items-start my-20 justify-between gap-y-5 px-6 md:px-8">
+          <div class="w-full mb-20">
+            <h2 class="text-heading text-4xl md:text-5xl font-semibold text-left w-full md:w-4/12">Solutions for your Industry</h2>
+          </div>
           <Services/>
+          <div class="w-full mb-20">
+            <h2 class="text-heading text-4xl md:text-5xl font-semibold text-left w-full md:w-4/12">Website Development</h2>
+          </div>
         </section>
       </div>
       <div v-else-if="pending">Loading...</div>
