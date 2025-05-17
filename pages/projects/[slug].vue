@@ -1,50 +1,60 @@
 <script setup lang="ts">
-import LiveExampleIcon from "~/components/LiveExampleIcon.vue";
+import { ref, onMounted } from 'vue'
+import LiveExampleIcon from "~/components/LiveExampleIcon.vue"
 
 const route = useRoute()
 const config = useRuntimeConfig()
 
-const { data: project, pending, error } = await useAsyncData(`project-${route.params.slug}`, () =>
-  $fetch(config.public.wordpressUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: {
-      query: `
-        query GetSingleProject($slug: ID!) {
-          project(id: $slug, idType: SLUG) {
-            title
-            slug
-            content
-            excerpt
-            featuredImage {
-              node {
-                sourceUrl
-                altText
+const project = ref(null)
+const pending = ref(true)
+const error = ref(null)
+
+onMounted(async () => {
+  try {
+    const res = await $fetch(config.public.wordpressUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: {
+        query: `
+          query GetSingleProject($slug: ID!) {
+            project(id: $slug, idType: SLUG) {
+              title
+              slug
+              content
+              excerpt
+              featuredImage {
+                node {
+                  sourceUrl
+                  altText
+                }
               }
-            }
-            categories {
-              nodes {
-                name
+              categories {
+                nodes {
+                  name
+                }
               }
-            }
-            projects {
-              liveLink
-              launchedDate
+              projects {
+                liveLink
+                launchedDate
+              }
             }
           }
-        }
-      `,
-      variables: {
-        slug: route.params.slug,
+        `,
+        variables: {
+          slug: route.params.slug,
+        },
       },
-    },
-  }).then(
-    res => res.data.project
-  )
-)
+    })
 
+    project.value = res.data?.project ?? null
+  } catch (err) {
+    error.value = err
+  } finally {
+    pending.value = false
+  }
+})
 </script>
 
 <template>
@@ -78,7 +88,7 @@ const { data: project, pending, error } = await useAsyncData(`project-${route.pa
     <div class="max-w-7xl mx-auto flex justify-center items-center px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col lg:flex-row align-start gap-5 justify-between mt-5 mb-10">
         <div class="w-10/12">
-          <p class="text-primary" v-html="project.content"></p>
+          <p class="text-primary" v-if="!pending" v-html="project.content"></p>
         </div>
         <aside class="bg-[#F6F2EF] flex flex-col gap-y-5 leading-loose p-10">
             <div class="flex items-center gap-5 justify-center border border-[#E7E7E7] p-3 max-w-md" v-if="project.projects.liveLink">
