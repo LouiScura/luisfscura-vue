@@ -2,6 +2,10 @@
 const config = useRuntimeConfig()
 const props = defineProps<{ limit?: number }>()
 
+console.log(useRoute().name)
+
+console.log('testing adasd')
+
 const { data: projects, pending, error } = await useAsyncData('getProjects', () =>
     $fetch(config.public.wordpressUrl, {
       method: 'POST',
@@ -44,9 +48,9 @@ const { data: projects, pending, error } = await useAsyncData('getProjects', () 
 <template>
   <NuxtLink
       v-for="(project, index) in projects"
-      :to="{ name: 'projects', params: { slug: project.uri } }"
+      :to="`/projects/${project.slug}`"
       :key="project.id"
-      class="p-6 border border-gray-200 w-full md:w-[48%] lg:w-[32%] lg:min-h-[330px] flex flex-col justify-center cursor-pointer gap-5 max-w-[450px]"
+      class="p-6 border border-gray-200 w-full md:w-[48%] lg:w-[31%] xl:w-[32%] lg:min-h-[330px] flex flex-col justify-center cursor-pointer gap-5 max-w-[450px]"
   >
     <img
         v-if="project.featuredImage?.node?.sourceUrl"
@@ -56,7 +60,7 @@ const { data: projects, pending, error } = await useAsyncData('getProjects', () 
     />
     <div class="flex items-center justify-between">
       <h2 class="text-2xl w-10/12 font-semibold text-heading m-0 hover:text-secondary transition-colors duration-300 ease-in-out">
-        {{ project.slug }}</h2>
+        {{ project.title }}</h2>
       <div class="bg-pb rounded-2xl p-[15px] inline-block text-center hover:bg-secondary transition-colors duration-300 ease-in-out">
         <img src="/icons/up-arrow-icon.svg" class="w-[15px] block" alt="Upw Arrow Icon"/>
       </div>

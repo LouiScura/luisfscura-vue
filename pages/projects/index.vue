@@ -2,19 +2,20 @@
 const config = useRuntimeConfig()
 
 const { data: page, pending, error } = await useAsyncData('projectsPage', () =>
-    $fetch(config.public.wordpressUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: {
-        query: `
+  $fetch(config.public.wordpressUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: {
+      query: `
           query {
             pageBy(uri: "projects") {
               title
+              content
             }
           }
       `
-      }
-    }).then(res => res.data.pageBy)
+    }
+  }).then(res => res.data.pageBy)
 )
 </script>
 
@@ -27,26 +28,27 @@ const { data: page, pending, error } = await useAsyncData('projectsPage', () =>
             <div>
               <section class="w-11/12 lg:w-10/12">
                 <h1
-                    class="text-white text-4xl md:text-5xl lg:text-7xl lg:!leading-[80px] font-bold my-4 md:my-1"
-                    v-html="page.title" />
+                  class="text-white text-4xl md:text-5xl lg:text-7xl lg:!leading-[80px] font-bold"
+                  v-html="page.title" />
+                <div class="text-white/60 text-base leading-relaxed lg:leading-loose my-5" v-html="page.content"></div>
               </section>
               <div class="flex flex-col flex-1 gap-5 lg:flex-row mt-5">
                 <UButton
                   to="https://calendly.com/luisfscura/30min"
                   target="_blank"
-                size="lg" color="pb" hover="sb"
-                class="text-md font-bold w-[75%] max-w-[235px] lg:max-w-[225px]">
-                <template #trailing>
-                  <UpArrowIcon />
-                </template>
-                Book a consultation
+                  size="lg" color="pb" hover="sb"
+                  class="text-md font-bold w-[75%] max-w-[235px] lg:max-w-[225px]">
+                  <template #trailing>
+                    <UpArrowIcon />
+                  </template>
+                  Book a consultation
                 </UButton>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <section class="flex flex-col flex-wrap md:flex-row max-w-7xl mx-auto text-left items-start my-20 justify-between gap-y-10 px-6 md:px-8"
+      <section class="flex flex-col flex-wrap md:flex-row max-w-7xl mx-auto text-left items-start my-20 gap-y-10 md:gap-x-8 md:gap-y-8 xl:gap-x-6 xl:gap-y-6 px-6 md:px-8"
                data-aos="zoom-in"
                data-aos-easing="ease-in-back"
                data-aos-delay="100"
