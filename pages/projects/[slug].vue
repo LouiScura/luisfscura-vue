@@ -1,60 +1,54 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import LiveExampleIcon from "~/components/LiveExampleIcon.vue"
+import { watch } from 'vue'
+import LiveExampleIcon from '~/components/LiveExampleIcon.vue'
 
 const route = useRoute()
 const config = useRuntimeConfig()
 
-const project = ref(null)
-const pending = ref(true)
-const error = ref(null)
-
-onMounted(async () => {
-  try {
-    const res = await $fetch(config.public.wordpressUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: {
-        query: `
-          query GetSingleProject($slug: ID!) {
-            project(id: $slug, idType: SLUG) {
-              title
-              slug
-              content
-              excerpt
-              featuredImage {
-                node {
-                  sourceUrl
-                  altText
-                }
-              }
-              categories {
-                nodes {
-                  name
-                }
-              }
-              projects {
-                liveLink
-                launchedDate
-              }
+const { pending, data: project, error } = await useFetch(config.public.wordpressUrl, {
+  key: () => `project-${route.params.slug}`, // handles route change
+  server: true,
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: {
+    query: `
+      query GetSingleProject($slug: ID!) {
+        project(id: $slug, idType: SLUG) {
+          title
+          slug
+          content
+          excerpt
+          featuredImage {
+            node {
+              sourceUrl
+              altText
             }
           }
-        `,
-        variables: {
-          slug: route.params.slug,
-        },
-      },
-    })
-
-    project.value = res.data?.project ?? null
-  } catch (err) {
-    error.value = err
-  } finally {
-    pending.value = false
-  }
+          categories {
+            nodes {
+              name
+            }
+          }
+          projects {
+            liveLink
+            launchedDate
+          }
+        }
+      }
+    `,
+    variables: {
+      slug: route.params.slug,
+    },
+  },
+  transform: res => res.data?.project ?? null,
 })
+
+watch(project, (val) => {
+  console.log(val.projects)
+})
+
 </script>
 
 <template>

@@ -22,3 +22,7 @@ body {
     --color-heading: #2D3436;
     --color-paragraph: #ADAFB0;
 }
+
+html {
+  scroll-behavior: smooth;
+}

@@ -1,36 +1,5 @@
 <script setup lang="ts">
-const config = useRuntimeConfig()
-const props = defineProps<{ limit?: number }>()
-
-const { data: services, pending, error } = await useAsyncData('getServices', () =>
-    $fetch(config.public.wordpressUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: {
-        query: `
-        query GetServices {
-          services(where: {orderby: {field: MENU_ORDER, order: ASC}}) {
-            nodes {
-              id
-              title
-              content
-              menuOrder
-              services {
-                 icon
-              }
-            }
-          }
-        }
-      `,
-      },
-    }).then(res => {
-      const all = res.data.services.nodes
-      return props.limit ? all.slice(0, props.limit) : all
-    })
-)
-
+const { data: services, pending, error } = useServices({ limit: 4 })
 </script>
 
 <template>

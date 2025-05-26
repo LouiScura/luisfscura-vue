@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import WhiteUpArrowIcon from "~/components/WhiteUpArrowIcon.vue";
+import TypingEffect from "~/components/TypingEffect.vue";
 
 const config = useRuntimeConfig()
 
@@ -19,6 +20,7 @@ const { data: page, pending, error } = await useAsyncData('homePage', () =>
                 satisfiedClients
                 projectsCompleted
                 reviewsGiven
+                faq
               }
             }
           }
@@ -29,10 +31,10 @@ const { data: page, pending, error } = await useAsyncData('homePage', () =>
 </script>
 
 <template>
-    <div v-if="page" class="w-full">
+    <div v-if="page" class="w-full snap-container">
 
       <!-- Hero Section -->
-      <div class="bg-primary py-14">
+      <div class="bg-primary py-20 md:min-h-[75vh] md:flex md:items-center">
         <div class="max-w-7xl mx-auto flex justify-center items-center px-4 sm:px-6 lg:px-8" data-aos="zoom-in">
           <div class="flex flex-1 flex-col bg-primary h-full leading-loose align-start justify-between mt-5 mb-10" >
             <div>
@@ -43,9 +45,9 @@ const { data: page, pending, error } = await useAsyncData('homePage', () =>
                 </div>
               </section>
               <section class="w-11/12 lg:w-10/12">
-                <h1
-                    class="text-white text-4xl md:text-5xl lg:text-7xl lg:!leading-[80px] font-bold my-4 md:my-1"
-                    v-html="page.home?.customTitle" />
+                  <h1 class="text-white text-4xl md:text-5xl lg:text-7xl lg:!leading-[80px] font-bold my-4 md:my-1">
+                    The <TypingEffect /> that your business needs to grow
+                  </h1>
                 <div class="text-white/60 text-base leading-relaxed lg:leading-loose mb-5" v-html="page.content"></div>
               </section>
               <section class="flex justify-between">
@@ -102,7 +104,7 @@ const { data: page, pending, error } = await useAsyncData('homePage', () =>
       </div>
 
       <!-- Stats -->
-      <section class="flex flex-col flex-wrap md:flex-row text-center max-w-7xl mx-auto justify-center items-center my-20 px-6 md:px-8 gap-10 md:gap-0"
+      <section class="flex flex-col flex-wrap md:flex-row text-center max-w-7xl mx-auto justify-center items-center my-20 px-6 md:px-8 gap-10 md:gap-0 snap-section"
                data-aos="zoom-in"
                data-aos-easing="ease-in-back"
                data-aos-delay="200"
@@ -115,25 +117,55 @@ const { data: page, pending, error } = await useAsyncData('homePage', () =>
       </section>
 
       <!-- Services -->
-      <section class="flex flex-col flex-wrap md:flex-row text-center max-w-7xl mx-auto px-6 md:px-8">
-          <div class="flex flex-col md:flex-row justify-between w-full items-start md:items-center gap-10">
-            <h2 class="text-heading text-4xl md:text-5xl font-bold text-left">Solutions for <br> your Industry</h2>
-            <UButton
-                to="#contact"
+      <section class="flex flex-col flex-wrap md:flex-row text-center max-w-7xl mx-auto px-6 md:px-8 snap-section">
+        <div class="flex flex-col md:flex-row justify-between w-full items-start md:items-center gap-10">
+          <h2 class="text-heading text-4xl md:text-5xl font-bold text-left">Solutions for <br> your Industry</h2>
+          <UButton
+            to="#contact"
+            size="lg" color="primary"
+            class="text-md text-white font-bold"
+          >
+            <template #trailing>
+              <WhiteUpArrowIcon />
+            </template>
+            View all services
+          </UButton>
+        </div>
+        <div class="flex flex-col flex-wrap md:flex-row max-w-7xl mx-auto text-left items-start my-20 justify-between gap-y-5" data-aos="zoom-in"
+             data-aos-easing="ease-in-back"
+             data-aos-delay="200"
+             data-aos-offset="0">
+          <Services/>
+        </div>
+      </section>
+
+      <!-- Featured Project -->
+      <section class="flex flex-col flex-wrap md:flex-row text-center max-w-7xl mx-auto px-6 md:px-8 mb-20">
+          <div class="flex flex-col justify-between w-full items-start gap-10">
+            <div class="flex flex-col md:flex-row justify-between w-full items-start md:items-center gap-10">
+              <h2 class="text-heading text-4xl md:text-5xl font-bold text-left">Latest Work:</h2>
+              <UButton
+                to="/projects"
                 size="lg" color="primary"
                 class="text-md text-white font-bold"
-                >
-              <template #trailing>
-                <WhiteUpArrowIcon />
-              </template>
-              View all services
-            </UButton>
-          </div>
-          <div class="flex flex-col flex-wrap md:flex-row max-w-7xl mx-auto text-left items-start my-20 justify-between gap-y-5" data-aos="zoom-in"
-               data-aos-easing="ease-in-back"
-               data-aos-delay="200"
-               data-aos-offset="0">
-            <Services/>
+              >
+                <template #trailing>
+                  <WhiteUpArrowIcon />
+                </template>
+                View all projects
+              </UButton>
+            </div>
+            <div class="flex mt-10 flex-wrap gap-y-5 md:gap-y-10 xl:gap-y-0 md:gap-x-5">
+              <FeaturedProjects/>
+            </div>
+        </div>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="flex flex-col flex-wrap md:flex-row text-center max-w-7xl mx-auto px-6 md:px-8 mb-20">
+          <div class="flex flex-col justify-between w-full items-start gap-10">
+              <h2 class="text-heading text-4xl md:text-5xl font-bold text-left">What people have to say</h2>
+              <Testimonial/>
           </div>
       </section>
 
@@ -141,7 +173,7 @@ const { data: page, pending, error } = await useAsyncData('homePage', () =>
       <section class="flex flex-col flex-wrap md:flex-row text-center max-w-7xl mx-auto px-6 md:px-8 mb-20">
         <div class="flex flex-col justify-between w-full items-start gap-10">
           <h2 class="text-heading text-4xl md:text-5xl font-bold text-left">Got questions? <br> I’m here to assist!</h2>
-          <FaqBlock/>
+          <FaqBlock :faq="page.home.faq"/>
         </div>
       </section>
     </div>
@@ -152,3 +184,11 @@ const { data: page, pending, error } = await useAsyncData('homePage', () =>
       Something went wrong.
     </div>
 </template>
+
+<style>
+.text-hero-gradiant {
+  background: linear-gradient(to right, #FFE8A3, #FFAB91);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+</style>

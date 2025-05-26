@@ -1,48 +1,5 @@
 <script setup lang="ts">
-const config = useRuntimeConfig()
-const props = defineProps<{ limit?: number }>()
-
-console.log(useRoute().name)
-
-console.log('testing adasd')
-
-const { data: projects, pending, error } = await useAsyncData('getProjects', () =>
-    $fetch(config.public.wordpressUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: {
-        query: `
-        query GetProjects {
-          projects(where: {orderby: {field: MENU_ORDER, order: ASC}}) {
-            nodes {
-              id
-              title
-              content
-              slug
-              featuredImage {
-                node {
-                  sourceUrl
-                  altText
-                }
-              }
-              categories {
-                nodes {
-                  name
-                }
-              }
-              menuOrder
-            }
-          }
-        }
-      `,
-      },
-    }).then(res => {
-      const all = res.data.projects.nodes
-      return props.limit ? all.slice(0, props.limit) : all
-    })
-)
+const { data: projects } = useProjects()
 </script>
 
 <template>

@@ -1,27 +1,36 @@
 <script setup lang="ts">
-import type { AccordionItem } from '@nuxt/ui'
+const props = defineProps<{ faq: string | null }>()
 
-const items = ref<AccordionItem[]>([
-  {
-    label: 'Icons',
-    icon: 'i-lucide-smile',
-    content: 'You have nothing to do, @nuxt/icon will handle it automatically.',
-    trailingIcon: 'i-lucide-plus'
-  },
-  {
-    label: 'Colors',
-    icon: 'i-lucide-swatch-book',
-    content: 'Choose a primary and a neutral color from your Tailwind CSS theme.'
-  },
-  {
-    label: 'Components',
-    icon: 'i-lucide-box',
-    content: 'You can customize components by using the `class` / `ui` props or in your app.config.ts.'
+const faqJson = computed(() => {
+  try {
+    return JSON.parse(props.faq ?? '[]')
+  } catch (e) {
+    console.error('Failed to parse FAQ JSON:', e)
+    return []
   }
-])
+})
+
+const items = computed<AccordionItem[]>(() =>
+  Array.isArray(faqJson.value)
+    ? faqJson.value.map((item: any) => ({
+      label: item.question,
+      content: item.answer,
+      icon: 'i-lucide-help-circle',
+      trailingIcon: 'i-lucide-plus',
+    }))
+    : []
+)
+
+const active = ref([])
 
 </script>
 
 <template>
-  <UAccordion v-model="active" trailing-icon="i-lucide-arrow-down" :items="items" data-aos="fade-right"/>
+  <UAccordion
+    v-if="items.length"
+    v-model="active"
+    :items="items"
+    trailing-icon="i-lucide-arrow-down"
+    data-aos="fade-right"
+  />
 </template>

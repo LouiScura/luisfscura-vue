@@ -8,6 +8,9 @@ export default defineNuxtConfig({
   imports: {
     autoImport: true,
   },
+  aos: {
+    once: true,
+  },
   modules: ['@nuxt/devtools', '@nuxt/ui', 'nuxt-aos'],
   css: ['~/assets/css/main.css'],
   icon: {

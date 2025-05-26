@@ -27,6 +27,24 @@ export default defineAppConfig({
                 help: 'mt-2 text-muted'
             },
         },
+        carousel: {
+            slots: {
+                container: 'flex items-start',
+            },
+            variants: {
+                active: {
+                    true: {
+                        dot: 'bg-secondary!'
+                    }
+                }
+            },
+        },
+      selectMenu: {
+        slots: {
+          value: 'truncate text-heading pointer-events-none',
+          placeholder: 'truncate placeholder:text-dimmed',
+        }
+        },
         textarea: {
             slots: {
                 root: 'relative inline-flex items-center',

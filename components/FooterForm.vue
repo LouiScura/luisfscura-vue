@@ -108,19 +108,19 @@ async function onSubmit (event: FormSubmitEvent<Schema>) {
       </UFormField>
 
       <UFormField label="Service required" name="service">
-        <USelectMenu v-model="state.service" :items="serviceOptions" class="bg-white w-full py-4"/>
+        <USelectMenu placeholder="Which service are you interested in?" v-model="state.service" :items="serviceOptions" class="bg-white w-full py-4"/>
       </UFormField>
 
 
       <UFormField label="Project budget" name="budget">
-        <USelectMenu v-model="state.budget" :items="budgetOptions" class="bg-white w-full py-4"/>
+        <USelectMenu placeholder="What’s your expected budget for the project?" v-model="state.budget" :items="budgetOptions" class="bg-white w-full py-4"/>
       </UFormField>
     </div>
 
     <UFormField label="Project details" name="details" class="mt-4">
       <UTextarea
           v-model="state.details"
-          placeholder="Tell us about your project goals, timeline, etc."
+          placeholder="Tell me about your project goals, timeline, etc."
           class="w-full !bg-white"/>
     </UFormField>
 
